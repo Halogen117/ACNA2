@@ -291,6 +291,7 @@ On the breadboard, connect each MFRC522 pin with the corresponding RPi pin with 
 1)	Connect the PiCamera to the CSI Port of the Raspberry Pi, which is the long thin port adjacent to the HDMI socket.
 2)	Lift the collar on top of the CSI port and slide the ribbon cable of the camera module into the port with the blue side facing the Ethernet port.
 3)	Once the cable is in the port, press the collar back down to lock the cable in place.
+![alt text](https://github.com/Halogen117/ACNA2/blob/master/README_Images/picam_hardware.png "PiCamera Hardware")
 
 #### Door Control System
 1.	If it has not already been done so, attach the T-Cobbler for Raspberry Pi to the breadboard.
