@@ -60,10 +60,10 @@ DISM/FT/3A/41
 This section will cover about the overview of the entirety of the project, which includes what is it about and the requirements needed to fulfill.
 
 ### Where we have uploaded our tutorial
-The table below provide the public tutorial link and the YouTube link where the video of the demonstration has been uploaded to.
+The table below provides the public tutorial link and the YouTube link where the video of the demonstration has been uploaded to.
 |                         | Link                                        |
 | ----------------------- | ------------------------------------------- |
-| Youtube                 | https://www.youtube.com/watch?v=xVEgjQvqfps |
+| YouTube                 | https://www.youtube.com/watch?v=xVEgjQvqfps |
 | Public tutorial link    | https://github.com/Halogen117/ACNA2         |
 
 ### What is ACNA 2.0 about
