@@ -1,0 +1,10 @@
+boto3
+configparser
+datetime
+flask
+gevent
+MFRC522
+numpy
+picamera
+twilio
+uuid

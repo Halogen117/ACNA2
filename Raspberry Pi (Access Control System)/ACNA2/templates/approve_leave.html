@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>Approval of Leaves</title>
+
+  <link rel="icon" type="image/png" href="../static/login-bootstrap/images/icons/favicon.ico"/>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="../static/dashboard-bootstrap/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../static/dashboard-bootstrap/dist/css/adminlte.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+      <span class="brand-text font-weight-light">ACNA System v2.0</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="info">
+          <a href="{{ url_for('userProfile') }}" class="d-block">{{ session['username'] }}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+                <a href="{{ url_for('dashboard') }}" class="nav-link">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                  </p>
+                </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('applyLeave') }}" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Apply for Leave
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-check-square"></i>
+              <p>
+                Approval of Leaves
+              </p>
+            </a>
+          </li>
+          {% if session['role'] == "admin" %}
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>
+                Admin Tools
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('viewUsers') }}" class="nav-link">
+                  <i class="far fa-edit nav-icon"></i>
+                  <p>User Management</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('viewScanners') }}" class="nav-link">
+                  <i class="fas fa-expand nav-icon"></i>
+                  <p>Scanner Management</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a href="{{ url_for('logout') }}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Approval of Leaves</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">List of Leave Requests</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Reason(s)</th>
+                  <th>Approved</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in unapproved_leaves %}
+                <tr>
+                  <td>{{ row[0] }}</td>
+                  <td>{{ row[1] }}</td>
+                  <td>{{ row[2] }}</td>
+                  <td>{{ row[3] }}</td> 
+                  <td style="color: red;"> Unapproved <br><a href="{{ url_for('changeApproval') }}?username={{ row[0] }}&start_date={{ row[1] }}&approve=true"><i title="Approve Leave" class="fas fa-check"></i></a></td>
+                </tr>
+                {% endfor %}
+                {% for row in approved_leaves %}
+                <tr>
+                  <td>{{ row[0] }}</td>
+                  <td>{{ row[1] }}</td>
+                  <td>{{ row[2] }}</td>
+                  <td>{{ row[3] }}</td> 
+                  <td style="color: green;"> Approved <br><a href="{{ url_for('changeApproval') }}?username={{ row[0] }}&start_date={{ row[1] }}&approve=false"><i title="Unapprove Leave" class="fas fa-times"></i></a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Username</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Reason(s)</th>
+                  <th>Approved</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </section>
+    
+  </div>
+
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="../static/dashboard-bootstrap/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../static/dashboard-bootstrap/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../static/dashboard-bootstrap/plugins/datatables/jquery.dataTables.js"></script>
+<script src="../static/dashboard-bootstrap/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- AdminLTE App -->
+<script src="../static/dashboard-bootstrap/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../static/dashboard-bootstrap/dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": false,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
+</body>
+</html>

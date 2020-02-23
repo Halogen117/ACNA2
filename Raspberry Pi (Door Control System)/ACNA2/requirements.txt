@@ -1,0 +1,6 @@
+boto3
+configparser
+gpiozero
+rpi_lcd
+twilio
+uuid

@@ -1,0 +1,6 @@
+you should generate 4 files into this folder:
+
+ACNA2-certificate.pem.crt
+ACNA2-private.pem.key
+ACNA2-public.pem.key
+ACNA2-rootca.pem
